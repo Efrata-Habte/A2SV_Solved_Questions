@@ -33,3 +33,20 @@ class Solution:
             common = temp
 
         return common
+
+
+## Optimized solution
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        n=len(strs)
+
+        if n==0:
+            return ""
+
+        prefix=strs[0]
+
+        for i in strs[1:]:
+            while not i.startswith(prefix) :
+                prefix = prefix[:-1]
+            
+        return prefix
