@@ -1,18 +1,30 @@
 class DataStream:
 
     def __init__(self, value: int, k: int):
-        self.value = value
-        self.streak = 0
-        self.size = k
+        self.cont = deque()
+        self.val = value
+        self.k = k
+        self.streak = k
 
     def consec(self, num: int) -> bool:
+        self.cont.append(num)
+        if num == self.val:
+            self.streak-=1
         
-        if num == self.value:
-            self.streak+=1
-        else:
-            self.streak=0
+        if len(self.cont) > self.k:
+            poped = self.cont.popleft()
+            if poped == self.val:
+                self.streak +=1
+
+        if len(self.cont) == self.k:
+            if self.streak == 0:
+                return True
         
-        return self.streak >= self.size
+        
+        return False
+        
+
+        
 
 
 # Your DataStream object will be instantiated and called as such:
