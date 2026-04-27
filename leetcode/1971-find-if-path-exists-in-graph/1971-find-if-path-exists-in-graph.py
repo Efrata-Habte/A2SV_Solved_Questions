@@ -1,23 +1,31 @@
 class Solution:
     def validPath(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
+        # iterative approach BFS
+
         graph = defaultdict(list)
 
-        for v,e in edges:
-            graph[e].append(v)
-            graph[v].append(e)
+        for u,v in edges:
+            graph[u].append(v)
+            graph[v].append(u)
+        
+        print(graph)
 
         visited = set()
+        queue = deque()
+        queue.append(source)
+        found = False
 
-        def dfs(node, visited,destination):
+        while queue:
+            node = queue.popleft()
             if node == destination:
-                return True
-
-            visited.add(node)
-            for nei in graph[node]:
-                if nei not in visited:
-                    if dfs(nei,visited,destination):
-                        return True
-
-            return False
+                found =  True
+                break
+            
+            if node not in visited:
+                visited.add(node)
+                
+                for i in (graph[node]):
+                    queue.append(i)
         
-        return dfs(source, visited, destination)
+        return found
+
