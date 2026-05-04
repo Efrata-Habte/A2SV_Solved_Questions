@@ -1,7 +1,21 @@
 class Solution:
     def findDuplicate(self, nums: List[int]) -> int:
-        count = Counter(nums)
+        # Floyd's cycle detection algorithm
 
-        for k, v in count.items():
-            if v > 1:
-                return k
+        # pahse -1 detecting cycle (treat the array as a linked list)
+        slow = nums[0]
+        fast = nums[0]
+
+        while True:
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+            if fast == slow:
+                break
+
+        # phase -2 finding the entrance point of the cycle
+        slow = nums[0]
+        while fast != slow:
+            slow = nums[slow]
+            fast = nums[fast]
+        
+        return slow
